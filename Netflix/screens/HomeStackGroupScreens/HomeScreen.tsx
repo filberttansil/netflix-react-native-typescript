@@ -4,7 +4,8 @@ import MovieSection from "../../components/MovieSection";
 import HomeScreenHeader from "../../components/HomeScreenHeader";
 import FeaturedMovieSection from "../../components/FeaturedMovieSection";
 import { state } from "../../constants/movies";
-const Home = ({ navigation }: any) => {
+
+const Home = () => {
   return (
     <SafeAreaView>
       <HomeScreenHeader />
