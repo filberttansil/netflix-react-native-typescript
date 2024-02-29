@@ -8,24 +8,37 @@ import {
 } from "react-native";
 import React from "react";
 import { themes } from "../themes/themes";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { HomeStackParamList } from "../navigation/Navigator";
+
+export type MovieType = {
+  id: number;
+  title: string;
+  imageUrl: string;
+};
 
 type ItemProps = {
   sectionName: string;
-  movies: {
-    id: number;
-    title: string;
-    imageUrl: string;
-  }[];
+  movies: MovieType[];
 };
 
 export default function MovieSection({ sectionName, movies }: ItemProps) {
+  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+
+  const handleNavigateToMovieDetail = (movie: MovieType) => {
+    navigation.navigate("MovieDetail", { movie });
+  };
+
   return (
     <View>
       <Text style={styles.textLg}>{sectionName}</Text>
       <FlatList
         data={movies}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.posterContainer}>
+          <TouchableOpacity
+            onPress={() => handleNavigateToMovieDetail(item)}
+            style={styles.posterContainer}
+          >
             <Image
               height={200}
               width={120}
