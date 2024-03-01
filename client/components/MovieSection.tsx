@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { themes } from "../themes/themes";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { HomeStackParamList } from "../navigation/Navigator";
 
-export type MovieType = {
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { HomeStackParamList } from "../navigation/navigation.types";
+
+type MovieType = {
   id: number;
   title: string;
   imageUrl: string;
@@ -25,8 +25,8 @@ type ItemProps = {
 export default function MovieSection({ sectionName, movies }: ItemProps) {
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
 
-  const handleNavigateToMovieDetail = (movie: MovieType) => {
-    navigation.navigate("MovieDetail", { movie });
+  const handleNavigateToMovieDetail = (id: number) => {
+    navigation.navigate("MovieDetail", { id });
   };
 
   return (
@@ -36,7 +36,7 @@ export default function MovieSection({ sectionName, movies }: ItemProps) {
         data={movies}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => handleNavigateToMovieDetail(item)}
+            onPress={() => handleNavigateToMovieDetail(item.id)}
             style={styles.posterContainer}
           >
             <Image

@@ -10,30 +10,15 @@ import {
 
 import HomeScreen from "../screens/HomeStackGroupScreens/HomeScreen";
 import MovieDetailScreen from "../screens/HomeStackGroupScreens/MovieDetailScreen";
-import ProfileScreen from "../screens/HomeStackGroupScreens/ProfileScreen";
+
 import ComingSoonScreen from "../screens/BottomTabGroupScreens/ComingSoonScreen";
 import DownloadsScreen from "../screens/BottomTabGroupScreens/DownloadsScreen";
-import { MovieType } from "../components/MovieSection";
+import { BottomTabParamList, HomeStackParamList } from "./navigation.types";
+import ProfileScreen from "../screens/BottomTabGroupScreens/ProfileScreen";
 
-// Define types for Navigation params
-export type HomeStackParamList = {
-  Home: undefined;
-  MovieDetail: {
-    movie: MovieType;
-  };
-};
-
-// Define RouteProp for MovieDetail screen
-export type MovieDetailProp = RouteProp<HomeStackParamList, "MovieDetail">;
-
-export type BottomTabParamList = {
-  HomeStackGroup: HomeStackParamList;
-  ComingSoon: undefined;
-  Downloads: undefined;
-  Profile: undefined;
-};
-
-// Create stack navigator for the HomeStackGroup
+/**
+ * HomeStackGroup
+ */
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 const HomeStackGroup = () => {
@@ -45,7 +30,9 @@ const HomeStackGroup = () => {
   );
 };
 
-// Create bottom tab navigator for the BottomTabGroup
+/**
+ * BottomTabGroup
+ */
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabGroup = () => {

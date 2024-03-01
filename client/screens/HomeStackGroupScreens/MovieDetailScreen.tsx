@@ -1,7 +1,6 @@
 import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 
-import { MovieType } from "../../components/MovieSection";
 import {
   NavigationProp,
   useNavigation,
@@ -10,18 +9,16 @@ import {
 import {
   HomeStackParamList,
   MovieDetailProp,
-} from "../../navigation/Navigator";
+} from "../../navigation/navigation.types";
 
 const MovieDetail = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const {
-    params: {
-      movie: { id, title, imageUrl },
-    },
+    params: { id },
   } = useRoute<MovieDetailProp>();
   return (
     <SafeAreaView>
-      <Text style={styles.textLg}>{title}</Text>
+      <Text style={styles.textLg}>Movie Id: {id}</Text>
       <Button onPress={() => navigation.goBack()} title="Back" />
     </SafeAreaView>
   );
