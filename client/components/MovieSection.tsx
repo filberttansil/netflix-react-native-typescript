@@ -7,15 +7,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { HomeStackParamList } from "../navigation/navigation.types";
-
-type MovieType = {
-  id: number;
-  title: string;
-  imageUrl: string;
-};
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/navigationTypes";
+import { MovieType } from "../types/movieTypes";
 
 type ItemProps = {
   sectionName: string;
@@ -23,10 +18,14 @@ type ItemProps = {
 };
 
 export default function MovieSection({ sectionName, movies }: ItemProps) {
-  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handleNavigateToMovieDetail = (id: number) => {
-    navigation.navigate("MovieDetail", { id });
+    navigate("Home", {
+      screen: "MovieDetailScreen",
+      params: { id },
+    });
   };
 
   return (
@@ -42,7 +41,7 @@ export default function MovieSection({ sectionName, movies }: ItemProps) {
             <Image
               height={200}
               width={120}
-              source={{ uri: item.imageUrl }}
+              source={{ uri: item.imgUrl }}
               //   resizeMode="contain"
             />
           </TouchableOpacity>
