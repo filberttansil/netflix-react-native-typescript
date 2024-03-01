@@ -14,7 +14,6 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchMovies());
-    console.log(sections);
   }, []);
 
   return (

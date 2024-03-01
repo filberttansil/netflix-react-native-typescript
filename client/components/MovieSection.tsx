@@ -3,14 +3,15 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigationTypes";
 import { MovieType } from "../types/movieTypes";
+import { Image } from "react-native-elements";
 
 type ItemProps = {
   sectionName: string;
@@ -18,6 +19,7 @@ type ItemProps = {
 };
 
 export default function MovieSection({ sectionName, movies }: ItemProps) {
+  const [imageIsLoading, setImageIsLoading] = useState<boolean>(true);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -39,11 +41,34 @@ export default function MovieSection({ sectionName, movies }: ItemProps) {
             style={styles.posterContainer}
           >
             <Image
-              height={200}
-              width={120}
               source={{ uri: item.imgUrl }}
-              //   resizeMode="contain"
+              style={styles.poster}
+              PlaceholderContent={
+                <ActivityIndicator
+                  style={styles.poster}
+                  size={"large"}
+                  color={"white"}
+                />
+              }
             />
+            {/* {imageIsLoading ? (
+              <ActivityIndicator
+                style={styles.poster}
+                size={"large"}
+                color={"white"}
+              />
+            ) : (
+              <Image
+                onLoadStart={() => setImageIsLoading(true)}
+                onLoadEnd={() => setImageIsLoading(false)}
+                style={[
+                  styles.poster,
+                  { zIndex: 0 },
+                  imageIsLoading && { display: "none" },
+                ]}
+               
+              />
+            )} */}
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id.toString()}
@@ -63,5 +88,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: "hidden",
     marginTop: 10,
+  },
+  poster: {
+    height: 200,
+    width: 120,
   },
 });
