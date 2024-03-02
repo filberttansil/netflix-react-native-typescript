@@ -1,33 +1,44 @@
-import { SafeAreaView, StyleSheet, FlatList } from "react-native";
+import { SafeAreaView, StyleSheet, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import MovieSection from "../../components/MovieSection";
 import HomeScreenHeader from "../../components/HomeScreenHeader";
 import FeaturedMovieSection from "../../components/FeaturedMovieSection";
-import { state } from "../../constants/movies";
-import { fetchMovies, selectMovieState } from "../../features/movie/movieSlice";
+import {
+  fetchGenres,
+  fetchMovies,
+  filterMoviesByCategory,
+  selectMovieState,
+} from "../../features/movie/movieSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
-
-const Home = () => {
+import { HomeStackParamList } from "../../types/navigationTypes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+type Props = NativeStackScreenProps<HomeStackParamList, "HomeScreen">;
+const Home = ({ route }: Props) => {
   const dispatch = useAppDispatch();
-  const { sections } = useSelector(selectMovieState);
-
+  const { sections, genres } = useSelector(selectMovieState);
   useEffect(() => {
     dispatch(fetchMovies());
+    dispatch(fetchGenres());
   }, []);
 
   return (
     <SafeAreaView>
-      <HomeScreenHeader />
-
       <FlatList
         data={sections}
         renderItem={({ item }) => (
           <MovieSection sectionName={item.title} movies={item.movies} />
         )}
         keyExtractor={(item) => item.title}
-        ListHeaderComponent={() => <FeaturedMovieSection />}
-        ListHeaderComponentStyle={{ marginBottom: 20 }}
+        ListHeaderComponent={() => (
+          <View>
+            <HomeScreenHeader genres={genres} />
+            {route.name === "HomeScreen" ? <FeaturedMovieSection /> : null}
+          </View>
+        )}
+        ListHeaderComponentStyle={{
+          marginBottom: 20,
+        }}
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>

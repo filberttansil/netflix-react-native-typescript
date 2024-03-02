@@ -9,7 +9,7 @@ import {
 export type HomeStackParamList = {
   HomeScreen: undefined;
   MovieDetailScreen: {
-    id: number;
+    slug: string;
   };
 };
 export type RootStackParamList = {

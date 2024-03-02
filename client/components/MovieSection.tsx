@@ -19,14 +19,13 @@ type ItemProps = {
 };
 
 export default function MovieSection({ sectionName, movies }: ItemProps) {
-  const [imageIsLoading, setImageIsLoading] = useState<boolean>(true);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const handleNavigateToMovieDetail = (id: number) => {
+  const handleNavigateToMovieDetail = (slug: string) => {
     navigate("Home", {
       screen: "MovieDetailScreen",
-      params: { id },
+      params: { slug },
     });
   };
 
@@ -37,7 +36,7 @@ export default function MovieSection({ sectionName, movies }: ItemProps) {
         data={movies}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => handleNavigateToMovieDetail(item.id)}
+            onPress={() => handleNavigateToMovieDetail(item.slug)}
             style={styles.posterContainer}
           >
             <Image

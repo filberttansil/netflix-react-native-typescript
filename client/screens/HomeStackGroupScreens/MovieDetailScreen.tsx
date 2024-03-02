@@ -1,25 +1,16 @@
 import { View, Text, Button, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 
-import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
-import {
-  HomeStackParamList,
-  MovieDetailProp,
-} from "../../navigation/navigation.types";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { HomeStackParamList } from "../../types/navigationTypes";
 
 const MovieDetail = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const {
-    params: { id },
-  } = useRoute<MovieDetailProp>();
+    params: { slug },
+  } = useRoute<RouteProp<HomeStackParamList, "MovieDetailScreen">>();
   return (
     <SafeAreaView>
-      <Text style={styles.textLg}>Movie Id: {id}</Text>
-      <Button onPress={() => navigation.goBack()} title="Back" />
+      <Text style={styles.textLg}>Movie Id: {slug}</Text>
     </SafeAreaView>
   );
 };

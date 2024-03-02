@@ -1,8 +1,24 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-
-const HomeScreenHeader = () => {
+import { GenreType } from "../types/movieTypes";
+import { useAppDispatch } from "../hooks/hooks";
+import { filterMoviesByCategory } from "../features/movie/movieSlice";
+type Props = { genres: GenreType[] };
+const HomeScreenHeader = ({ genres }: Props) => {
+  const [focusedGenreId, setFocusedGenreId] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
+  const handleFilterButton = (genreId: number) => {
+    setFocusedGenreId(genreId);
+    dispatch(filterMoviesByCategory(genreId));
+    console.log(genreId);
+  };
   return (
     <View style={styles.headerContainer}>
       <View style={styles.header1}>
@@ -15,17 +31,24 @@ const HomeScreenHeader = () => {
         />
       </View>
       {/* Filter */}
-      <View style={styles.header2}>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.textMd}>TV Shows</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.textMd}>TV Shows</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.textMd}>TV Shows</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView horizontal style={styles.header2}>
+        {genres.map((genre) => {
+          return (
+            <TouchableOpacity
+              key={genre.id}
+              style={[
+                styles.filterButton,
+                focusedGenreId === genre.id
+                  ? { backgroundColor: "darkgray" }
+                  : {},
+              ]}
+              onPress={() => handleFilterButton(genre.id)}
+            >
+              <Text style={styles.textMd}>{genre.name}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
@@ -36,9 +59,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   textMd: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#F5F5F5",
-    fontWeight: "600",
+    fontWeight: "700",
   },
   headerContainer: {
     padding: 10,
@@ -59,6 +82,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 9999,
+    marginRight: 8,
   },
   featuredMovieContainer: {
     borderRadius: 15,

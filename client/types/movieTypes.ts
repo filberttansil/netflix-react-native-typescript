@@ -32,6 +32,14 @@ export interface SectionType {
 export interface MovieState {
   sections: SectionType[];
   movies: MovieType[];
+  genres: GenreType[];
   loading: boolean;
   error: string | undefined;
+}
+
+export interface GenreType {
+  id: number;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

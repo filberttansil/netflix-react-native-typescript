@@ -63,6 +63,20 @@ class PubController {
       next(error);
     }
   }
+  static async getGenres(req, res, next) {
+    try {
+      const { name } = req.query;
+      const searchCondition = name ? { name: { [Op.iLike]: `%${name}%` } } : {};
+
+      const genres = await Genre.findAll({
+        order: [["id", "ASC"]],
+        where: searchCondition,
+      });
+      res.status(200).json(genres);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = PubController;

@@ -12,5 +12,6 @@ router.get("/", function (req, res, next) {
 
 router.get("/movies", PubController.getMovies);
 router.get("/movies/:slug", PubController.getMovieDetails);
+router.get("/genres", PubController.getGenres);
 
 module.exports = router;
