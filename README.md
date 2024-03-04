@@ -1,4 +1,6 @@
-### Setup Server
+
+### Setup Server![Uploading Simulator Screenshot - iPhone 15 Pro Max - 2024-03-04 at 16.22.08.png…]()
+
 1. Install Deps
 
 ```
