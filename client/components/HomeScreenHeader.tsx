@@ -7,32 +7,52 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { GenreType } from "../types/movieTypes";
+import { GenreType, HomeStackNavigationProp } from "../types/movieTypes";
 import { useAppDispatch } from "../hooks/hooks";
-import { filterMoviesByCategory } from "../features/movie/movieSlice";
-type Props = { genres: GenreType[] };
-const HomeScreenHeader = ({ genres }: Props) => {
+import {
+  fetchMovies,
+  filterMoviesByCategory,
+} from "../features/movie/movieSlice";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
+import { HomeStackParamList } from "../types/navigationTypes";
+import { useNavigation } from "@react-navigation/native";
+type Props = {
+  genres: GenreType[];
+  children: React.ReactNode;
+};
+const HomeScreenHeader = ({ genres, children }: Props) => {
+  const navigation = useNavigation<HomeStackNavigationProp>();
   const [focusedGenreId, setFocusedGenreId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const handleFilterButton = (genreId: number) => {
-    setFocusedGenreId(genreId);
-    dispatch(filterMoviesByCategory(genreId));
-    console.log(genreId);
+    if (focusedGenreId === genreId) {
+      setFocusedGenreId(null);
+      dispatch(fetchMovies());
+    } else {
+      setFocusedGenreId(genreId);
+      dispatch(filterMoviesByCategory(genreId));
+      console.log(genreId);
+    }
   };
   return (
     <View style={styles.headerContainer}>
       <View style={styles.header1}>
         <Text style={styles.textLg}>For Corry</Text>
-        <Ionicons
-          style={{ marginRight: 20 }}
-          name="search"
-          size={24}
-          color={"#F5F5F5"}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+          <Ionicons
+            style={{ marginRight: 20 }}
+            name="search"
+            size={24}
+            color={"#F5F5F5"}
+          />
+        </TouchableOpacity>
       </View>
       {/* Filter */}
       <ScrollView horizontal style={styles.header2}>
-        {genres.map((genre) => {
+        {genres?.map((genre) => {
           return (
             <TouchableOpacity
               key={genre.id}
@@ -49,6 +69,7 @@ const HomeScreenHeader = ({ genres }: Props) => {
           );
         })}
       </ScrollView>
+      {children}
     </View>
   );
 };
@@ -64,7 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   headerContainer: {
-    padding: 10,
+    padding: 5,
   },
   header1: {
     flexDirection: "row",
@@ -75,6 +96,7 @@ const styles = StyleSheet.create({
   header2: {
     flexDirection: "row",
     gap: 7,
+    marginBottom: 20,
   },
   filterButton: {
     paddingHorizontal: 13,

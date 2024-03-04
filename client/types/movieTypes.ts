@@ -1,3 +1,7 @@
+import { RouteProp } from "@react-navigation/native";
+import { HomeStackParamList } from "./navigationTypes";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 export interface CastType {
   id: number;
   movieId: number;
@@ -43,3 +47,6 @@ export interface GenreType {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type HomeStackNavigationProp =
+  NativeStackNavigationProp<HomeStackParamList>;

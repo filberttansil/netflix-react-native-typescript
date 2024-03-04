@@ -19,6 +19,7 @@ import {
   HomeStackParamList,
   RootStackParamList,
 } from "../types/navigationTypes";
+import SearchScreen from "../screens/HomeStackGroupScreens/SearchScreen";
 
 /**
  * HomeStackGroup
@@ -33,6 +34,7 @@ const HomeStackGroup = () => {
         name="MovieDetailScreen"
         component={MovieDetailScreen}
       />
+      <HomeStack.Screen name="SearchScreen" component={SearchScreen} />
     </HomeStack.Navigator>
   );
 };

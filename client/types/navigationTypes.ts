@@ -11,6 +11,7 @@ export type HomeStackParamList = {
   MovieDetailScreen: {
     slug: string;
   };
+  SearchScreen: undefined;
 };
 export type RootStackParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;

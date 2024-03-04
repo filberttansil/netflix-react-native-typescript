@@ -46,7 +46,7 @@ export const movieSlice = createSlice({
       const filteredMovies = state.movies.filter(
         (movie) => movie.genreId === action.payload
       );
-      setMovies(filteredMovies);
+      state.sections.forEach((section) => (section.movies = filteredMovies));
     },
   },
   extraReducers: (builder) => {
