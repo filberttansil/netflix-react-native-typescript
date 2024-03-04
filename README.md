@@ -1,5 +1,5 @@
 
-### Setup Server![Uploading Simulator Screenshot - iPhone 15 Pro Max - 2024-03-04 at 16.22.08.png…]()
+### Setup Server
 
 1. Install Deps
 
@@ -30,3 +30,4 @@ npx sequelize db:seed:all
 ```
 node bin/www --watch
 ```
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-03-04 at 16 22 08](https://github.com/filberttansil/netflix-react-native-typescript/assets/133459777/8d175729-f3ce-4b42-9562-885e91a6e89e)
