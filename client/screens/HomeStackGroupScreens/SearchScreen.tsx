@@ -2,26 +2,17 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
-  Keyboard,
   SafeAreaView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import React, { useEffect, useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackNavigationProp, MovieType } from "../../types/movieTypes";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchMovies } from "../../features/movie/movieSlice";
 
 const SearchScreen = () => {
   const navigation = useNavigation<HomeStackNavigationProp>();

@@ -10,8 +10,9 @@ router.get("/", function (req, res, next) {
   res.send("Welcome to Netflix Public API");
 });
 
+router.post("/register", PubController.register);
 router.get("/movies", PubController.getMovies);
-router.get("/movies/:slug", PubController.getMovieDetails);
 router.get("/genres", PubController.getGenres);
+router.get("/movies/:slug", PubController.getMovieDetails);
 
 module.exports = router;

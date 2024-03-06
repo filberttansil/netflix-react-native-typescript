@@ -1,7 +1,30 @@
 const { Op } = require("sequelize");
-const { Movie, Genre, Cast } = require("../models");
+const { Movie, Genre, Cast, User } = require("../models");
 
 class PubController {
+  static async register(req, res, next) {
+    try {
+      const { username, email, password, phoneNumber, address } = req.body;
+      console.log("first");
+      const created = await User.create({
+        username,
+        email,
+        password,
+        role: "user",
+        phoneNumber,
+        address,
+      });
+
+      res.status(201).json({
+        id: created.id,
+        username: created.username,
+        email: created.email,
+        role: created.role,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
   static async getMovies(req, res, next) {
     try {
       const { title } = req.query;
