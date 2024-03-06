@@ -17,6 +17,11 @@ export interface User {
   phoneNumber: string;
   address: string;
 }
+
+export interface LoginForm {
+  email: string;
+  password: string;
+}
 // Initial State
 const initialState: AuthState = {
   user: null,
@@ -33,28 +38,29 @@ export const register = createAsyncThunk(
     try {
       const response = await axios.post(API_URL + "/register", { ...formData });
       return response.data;
-    } catch (err: any) {
-      if (!err.response) {
-        throw err;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
       }
-      console.log(err.response.data);
-      return rejectWithValue(err.response.data);
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const login = createAsyncThunk("auth/login", async () => {
-  try {
-  } catch (error) {
-    console.error(error);
+export const login = createAsyncThunk(
+  "auth/login",
+  async (formData: LoginForm, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(API_URL + "/login", { ...formData });
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) throw error;
+      console.log(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
   }
-});
-export const logout = createAsyncThunk("auth/logout", async () => {
-  try {
-  } catch (error) {
-    console.error(error);
-  }
-});
+);
 
 // createSlice
 const authSlice = createSlice({
@@ -80,9 +86,16 @@ const authSlice = createSlice({
       state.error = "";
     });
     builder.addCase(register.rejected, (state, action) => {
-      state.user = null;
-
+      state.loading = false;
       state.error = action.error.message;
+    });
+    builder.addCase(login.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.authenticated = true;
+      state.loading = false;
+      state.error = "";
     });
   },
 });

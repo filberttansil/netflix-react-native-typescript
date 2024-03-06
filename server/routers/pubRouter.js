@@ -11,6 +11,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/register", PubController.register);
+router.post("/login", PubController.login);
 router.get("/movies", PubController.getMovies);
 router.get("/genres", PubController.getGenres);
 router.get("/movies/:slug", PubController.getMovieDetails);

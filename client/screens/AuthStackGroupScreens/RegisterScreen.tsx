@@ -1,7 +1,6 @@
 import {
   Keyboard,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
