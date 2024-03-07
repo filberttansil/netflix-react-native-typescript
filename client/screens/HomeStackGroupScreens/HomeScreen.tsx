@@ -4,7 +4,6 @@ import {
   FlatList,
   View,
   ActivityIndicator,
-  useWindowDimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import MovieSection from "../../components/MovieSection";
@@ -13,13 +12,15 @@ import FeaturedMovieSection from "../../components/FeaturedMovieSection";
 import {
   fetchGenres,
   fetchMovies,
-  filterMoviesByCategory,
   selectMovieState,
 } from "../../features/movie/movieSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
 import { HomeStackParamList } from "../../types/navigationTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import * as SecureStore from "expo-secure-store";
+import { setAuthenticated } from "../../features/auth/authSlice";
+
 type Props = NativeStackScreenProps<HomeStackParamList, "HomeScreen">;
 const Home = ({ route }: Props) => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ const Home = ({ route }: Props) => {
         })
     );
   };
+
   useEffect(() => {
     dispatch(fetchMovies());
     dispatch(fetchGenres());

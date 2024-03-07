@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import { s } from "../../themes/style";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../types/navigationTypes";
 import { Button, TextInput } from "react-native-paper";
 import { useAppDispatch } from "../../hooks/hooks";
-import { login } from "../../features/auth/authSlice";
-
+import { login, setAuthenticated } from "../../features/auth/authSlice";
+import * as SecureStore from "expo-secure-store";
 interface LoginFormType {
   email: string;
   password: string;
@@ -27,6 +27,22 @@ const LoginScreen = ({
   const handleSubmit = () => {
     dispatch(login(form));
   };
+  const checkAuthenticated = async () => {
+    try {
+      const access_token = await SecureStore.getItemAsync("access_token");
+      console.log(access_token);
+      if (!access_token) {
+        dispatch(setAuthenticated(false));
+      } else {
+        dispatch(setAuthenticated(true));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    checkAuthenticated();
+  }, []);
   return (
     <SafeAreaView>
       <Text style={s.header}>Login</Text>

@@ -12,8 +12,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, TextInput } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../types/navigationTypes";
-import { User, register } from "../../features/auth/authSlice";
+import { register } from "../../features/auth/authSlice";
 import { useAppDispatch } from "../../hooks/hooks";
+import { User } from "../../types/authTypes";
 
 const RegisterScreen = ({
   navigation,
@@ -31,8 +32,9 @@ const RegisterScreen = ({
     setForm({ ...form, [key]: value });
   };
   const handleSubmit = () => {
-    // setForm(initialForm);
     dispatch(register(form));
+    setForm(initialForm);
+    navigation.navigate("Login");
   };
   return (
     <SafeAreaView style={s.authContainer}>

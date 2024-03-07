@@ -1,27 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config/api";
-
-// Types
-export interface AuthState {
-  user: User | null;
-  token: string;
-  authenticated: boolean;
-  loading: boolean;
-  error: string | undefined;
-}
-export interface User {
-  username: string;
-  email: string;
-  password: string;
-  phoneNumber: string;
-  address: string;
-}
-
-export interface LoginForm {
-  email: string;
-  password: string;
-}
+import { AuthState, LoginForm, User } from "../../types/authTypes";
+import * as SecureStore from "expo-secure-store";
 // Initial State
 const initialState: AuthState = {
   user: null,
@@ -53,6 +34,10 @@ export const login = createAsyncThunk(
   async (formData: LoginForm, { rejectWithValue }) => {
     try {
       const response = await axios.post(API_URL + "/login", { ...formData });
+      await SecureStore.setItemAsync(
+        "access_token",
+        JSON.stringify(response.data.access_token)
+      );
       return response.data;
     } catch (error: any) {
       if (!error.response) throw error;
@@ -99,5 +84,5 @@ const authSlice = createSlice({
     });
   },
 });
-export const {} = authSlice.actions;
+export const { setAuthenticated } = authSlice.actions;
 export const authReducer = authSlice.reducer;

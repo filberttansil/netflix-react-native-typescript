@@ -11,7 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { state } from "../constants/movies";
 const FeaturedMovieSection = () => {
   const movies = state.listCategories[0].movies;
-  const { height, width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   return (
     <View style={styles.featuredMovieContainer}>
       <Image
